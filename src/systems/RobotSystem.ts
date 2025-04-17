@@ -8,7 +8,7 @@ import { RobotRunnerSystem } from "./RobotRunnerSystem";
 const acceleration = ROBOT_CONSTANTS.ROBOT_ACCELERATION;
 const maxSpeed = ROBOT_CONSTANTS.ROBOT_MAX_SPEED;
 const maxSpeedForRotation = ROBOT_CONSTANTS.ROBOT_MAX_SPEED_FOR_ROTATION;
-const rotationSpeed = ROBOT_CONSTANTS.ROBOT_ROTATION_SPEED;
+const cellSize = MAZE_CONSTANTS.CELL_SIZE;
 export const RobotSystem = {
 	tick(dt: number = 1) {
 		const state = useRobotStore.getState();
@@ -30,21 +30,32 @@ export const RobotSystem = {
 		const nextX = x + dx;
 		const nextY = y + dy;
 
-		const cellSize = MAZE_CONSTANTS.CELL_SIZE;
-		const cellX = Math.floor(nextX / cellSize);
-		const cellY = Math.floor(nextY / cellSize);
-		const maze = useMazeStore.getState().maze;
-		const currentCell = maze[cellX]?.[cellY];
-		if (currentCell?.end) {
-			RobotRunnerSystem.stop();
-			useGameStore.getState().stopGame();
-		}
 		if (!MazeSystem.hasCollision(nextX, nextY, ROBOT_CONSTANTS.ROBOT_SIZE)) {
+			const cellX = Math.floor(nextX / cellSize);
+			const cellY = Math.floor(nextY / cellSize);
+			const maze = useMazeStore.getState().maze;
+			const currentCell = maze[cellX]?.[cellY];
+
 			useRobotStore.setState({
 				x: nextX,
 				y: nextY,
 				speed: newSpeed,
 			});
+
+			if (currentCell?.end) {
+				RobotRunnerSystem.stop();
+				useGameStore.getState().stopGame();
+			}
+
+			if (
+				currentCell &&
+				!currentCell.visited &&
+				!currentCell.start &&
+				!currentCell.end
+			) {
+				const visited = { ...currentCell, visited: true };
+				useMazeStore.getState().updateCell(visited);
+			}
 		} else {
 			useRobotStore.setState({ speed: 0 });
 		}

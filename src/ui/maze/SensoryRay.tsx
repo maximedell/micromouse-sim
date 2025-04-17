@@ -3,7 +3,6 @@ import { Direction } from "../../types/robotAPI";
 import { useRobotStore } from "../../stores/RobotStore";
 import { MazeSystem } from "../../systems/MazeSystem";
 import { ROBOT_CONSTANTS } from "../../data/constant";
-import { MAZE_CONSTANTS } from "../../data/constant";
 
 type Props = {
 	direction: Direction;
@@ -14,10 +13,6 @@ export const SensorRay = ({ direction, color = "#7a0000" }: Props) => {
 	const { x, y, angle } = useRobotStore();
 
 	const distance = MazeSystem.getWallDistance({ x, y, angle }, direction);
-	const effectiveDistance =
-		distance === -1
-			? ROBOT_CONSTANTS.ROBOT_MAX_DETECTION_DISTANCE * MAZE_CONSTANTS.CELL_SIZE
-			: distance;
 
 	let dirAngle = angle;
 	if (direction === "left") dirAngle -= 90;
@@ -32,8 +27,8 @@ export const SensorRay = ({ direction, color = "#7a0000" }: Props) => {
 	const startY = y + Math.sin(rad) * offset;
 
 	// Point d'arrivée : distance détectée à partir de ce bord
-	const endX = startX + Math.cos(rad) * effectiveDistance;
-	const endY = startY + Math.sin(rad) * effectiveDistance;
+	const endX = startX + Math.cos(rad) * distance;
+	const endY = startY + Math.sin(rad) * distance;
 
 	return (
 		<Line

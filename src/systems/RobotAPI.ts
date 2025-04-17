@@ -1,4 +1,4 @@
-import { RobotAPI, Direction } from "../types/robotAPI";
+import { RobotAPI } from "../types/robotAPI";
 import { MazeSystem } from "./MazeSystem";
 import { RobotRunnerSystem } from "./RobotRunnerSystem";
 import { RobotSystem } from "./RobotSystem";

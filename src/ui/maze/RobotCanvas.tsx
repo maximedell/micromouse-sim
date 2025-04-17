@@ -1,5 +1,5 @@
 import { useRobotStore } from "../../stores/RobotStore";
-import { MAZE_CONSTANTS, ROBOT_CONSTANTS } from "../../data/constant";
+import { ROBOT_CONSTANTS } from "../../data/constant";
 import { Rect, Group, Text } from "react-konva";
 
 export const RobotCanvas = () => {
@@ -7,9 +7,6 @@ export const RobotCanvas = () => {
 
 	const size = ROBOT_CONSTANTS.ROBOT_SIZE;
 	const color = ROBOT_CONSTANTS.ROBOT_COLOR;
-
-	const arrowOffset = (-size / 2) * 0.6;
-	const arrowLength = size * 0.6;
 
 	return (
 		<Group x={x} y={y} rotation={angle}>

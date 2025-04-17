@@ -19,6 +19,7 @@ interface MazeActions {
 	updateCell: (cell: Cell) => void;
 	setGeneratedMaze: (maze: Cell[][]) => void;
 	resetVisited: () => void;
+	setVisited: (cell: Cell) => void;
 }
 
 interface MazeStoreWithActions extends MazeStore, MazeActions {}
@@ -86,5 +87,9 @@ export const useMazeStore = create<MazeStoreWithActions>()(
 					row.map((cell) => ({ ...cell, visited: false }))
 				),
 			})),
+		setVisited: (cell) => {
+			const updatedCell = { ...cell, visited: true };
+			useMazeStore.getState().updateCell(updatedCell);
+		},
 	}))
 );
