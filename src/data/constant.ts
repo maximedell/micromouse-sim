@@ -1,0 +1,18 @@
+export const MAZE_CONSTANTS = {
+	CELL_SIZE: 50,
+	WALL_COLOR: "#000000",
+	PATH_COLOR: "#3C3D37",
+	START_COLOR: "#005c00",
+	END_COLOR: "#590000",
+	VISITED_COLOR: "#ECDFCC",
+} as const;
+
+export const ROBOT_CONSTANTS = {
+	ROBOT_SIZE: 20,
+	ROBOT_COLOR: "#7a0000",
+	ROBOT_MAX_SPEED: 3, // Cells per second
+	ROBOT_ACCELERATION: 0.5, // Cells per second^2
+	ROBOT_MAX_SPEED_FOR_ROTATION: 1, // Cells per second
+	ROBOT_ROTATION_SPEED: 90, // Degrees per second
+	ROBOT_MAX_DETECTION_DISTANCE: 3, // Cells
+};
